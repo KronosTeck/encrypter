@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encriptador de Texto</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <h1>
+      <div class="contendeor">
+        <img id= "banner" src="banner/Banner-cifrado-2-4.webp">  
+        <div class="Encriptador"><em>Encriptador</em></div>
+        <div class="dtxt"><em>de Texto</em></div>
+      </div>
+    </h1>
+   <div class="texto-general">
+    <br><br>
+    <div>
+      <img src="banner/5983468.png" class="lock">
+      <img src="banner/5983468.png" class="lock2">
+
+      <label for="InText">Texto a encriptar:</label><br>
+      <input type="text" id="InText"><br><br>
+      <label for="operar">Modo:</label><br>
+      <select id="operar">
+          <option value="encrypt">Encriptar</option>
+          <option value="decrypt">Desencriptar</option>
+      </select><br><br> 
+      <button onclick="convertText()">Convertir</button><br><br>
+      <label for="outputText">Resultado:</label><br>
+      <input type="text" id="outputText" readonly><br><br>
+      <button onclick= copyToClipboard()>Copiar</button>
+  </div>
+  </div>
+    <script>
+        const encryptionKeys = {
+            "e": "enter",
+            "i": "imes",
+            "a": "ai",
+            "o": "ober",
+            "u": "ufat"
+        };
+
+        const decryptionKeys = Object.fromEntries(Object.entries(encryptionKeys).map(([key, value]) => [value, key]));
+
+        function convertText() {
+            const InText = document.getElementById("InText").value;
+            const operar = document.getElementById("operar").value;
+            let outputText = "";
+
+            if (operar === "encrypt") {
+                outputText = InText.split("").map(char => encryptionKeys[char] || char).join("");
+            } else {
+                let tempText = InText;
+                for (const [key, value] of Object.entries(decryptionKeys)) {
+                    tempText = tempText.split(key).join(value);
+                }
+                outputText = tempText;
+            }
+
+            document.getElementById("outputText").value = outputText;
+        }
+
+        function copyToClipboard() {
+            const outputText = document.getElementById("outputText");
+            outputText.select();
+            document.execCommand("copy");
+        }
+    </script>
+</body>
+</html>
